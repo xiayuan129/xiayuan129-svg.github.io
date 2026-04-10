@@ -3,436 +3,402 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>流光溢彩 · 音乐平台</title>
+<title>王者荣耀 · 荣耀经理人 - 封神完整版</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"SF Pro Text","Inter",system-ui,sans-serif}
-html,body{height:100%}
-body{
-background:#0A0B10;color:rgba(255,255,255,0.92);
-overflow-x:hidden;padding-bottom:140px;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,"Microsoft YaHei",sans-serif}
+body{background:#0A0B12;color:rgba(255,255,255,0.92);min-height:100vh}
 
-/* 侧边栏 */
-.sidebar{
-position:fixed;top:0;left:0;width:240px;height:100vh;
-background:#12131C;backdrop-filter:blur(10px);
-padding:28px 20px;display:flex;flex-direction:column;gap:6px;
-z-index:10;
+/* 顶部 */
+.header{
+position:sticky;top:0;z-index:99;background:#131626;
+display:flex;align-items:center;justify-content:space-between;
+padding:14px 24px;border-bottom:1px solid #1E2235;
 }
-.logo{
-font-size:24px;font-weight:700;
-background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
--webkit-background-clip:text;background-clip:text;color:transparent;
-margin-bottom:24px;
+.logo{font-size:18px;font-weight:700;background:linear-gradient(90deg,#E6B84A,#D4A030);-webkit-background-clip:text;background-clip:text;color:transparent}
+.top-info{display:flex;gap:24px;font-size:14px;color:#A0A4B8}
+.gold{color:#E6B84A}
+.salary{color:#E34D4D}
+
+/* 三栏 */
+.container{display:flex;min-height:calc(100vh - 60px)}
+.nav{
+width:240px;background:#131626;border-right:1px solid #1E2235;
+padding:24px 16px;display:flex;flex-direction:column;gap:8px;
 }
 .nav-item{
-display:flex;align-items:center;gap:12px;padding:14px 16px;
-border-radius:12px;font-size:15px;cursor:pointer;
-transition:all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
+padding:12px 14px;border-radius:8px;cursor:pointer;
+font-size:15px;display:flex;align-items:center;gap:10px;
 }
-.nav-item:hover{background:#1C1D2B}
-.nav-item.active{
-background:linear-gradient(90deg,#4A1D6D,#E83E8C);
-color:#fff;font-weight:600;
+.nav-item:hover{background:#1C1F2F}
+.nav-item.active{background:linear-gradient(90deg,#E6B84A,#D4A030);color:#000;font-weight:600}
+
+.main{flex:1;padding:28px}
+.panel{
+width:280px;background:#131626;border-left:1px solid #1E2235;
+padding:24px;display:flex;flex-direction:column;gap:20px;
 }
 
-/* 主内容 */
-.main{margin-left:240px;padding:32px}
+/* 卡片 */
+.card{
+background:#131626;border:1px solid #1E2235;border-radius:16px;
+padding:18px;margin-bottom:16px;
+}
+.card-title{font-size:16px;font-weight:600;margin-bottom:12px;color:#E6B84A}
+
+/* 按钮 */
+.btn-primary{
+background:linear-gradient(90deg,#E6B84A,#D4A030);color:#000;
+border:none;border-radius:40px;padding:10px 18px;font-weight:600;cursor:pointer;
+}
+.btn-secondary{
+background:transparent;border:1px solid #E6B84A;color:#fff;
+border-radius:8px;padding:8px 14px;cursor:pointer;
+}
+.btn-blue{border-color:#3A7BD5}
+.btn-green{border-color:#3AA857}
+.btn-red{border-color:#E34D4D}
+
+/* 选手 */
+.players{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.player-card{
+background:#1C1F2F;border-radius:12px;padding:14px;cursor:pointer;
+border:1px solid #1E2235;
+}
+.player-pos{
+font-size:12px;background:#3A7BD5;padding:2px 8px;
+border-radius:20px;display:inline-block;margin-bottom:6px;
+}
+.player-name{font-weight:600;margin-bottom:4px}
+.player-stat{font-size:12px;color:#A0A4B8}
+.bar{width:100%;height:4px;background:#1E2235;border-radius:4px;overflow:hidden;margin-top:4px}
+.bar-inner{height:100%;background:#E6B84A}
+
+/* 合同 */
+.contract{
+padding:10px;background:#1C1F2F;border-radius:8px;margin-bottom:8px;
+border-left:3px solid #E6B84A;
+}
+.contract-red{border-left:3px solid #E34D4D}
+
+/* 技能 */
+.skill{
+padding:10px;background:#1C1F2F;border-radius:8px;margin-bottom:8px;
+border-left:3px solid #3A7BD5;
+}
+.skill-name{font-weight:bold;color:#3A7BD5}
+
+/* 装备 */
+.equip-grid{
+display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;
+}
+.equip{
+background:#1C1F2F;border-radius:12px;padding:12px;text-align:center;
+}
+
+/* BP */
+.bp-box{
+display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;
+}
+.bp-side{background:#1C1F2F;border-radius:12px;padding:14px}
+.ban-pick{
+display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px;
+}
+.hero{
+width:100%;aspect-ratio:1;background:#1E2235;border-radius:8px;
+display:grid;place-items:center;font-size:10px;
+}
+
+/* 夺冠动画 */
+.champion{
+position:fixed;top:0;left:0;width:100%;height:100vh;
+background:linear-gradient(135deg,#0A0B12,#131626);
+display:none;place-items:center;z-index:9999;
+animation:fadeIn 1s;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.cup{
+width:260px;height:260px;background:radial-gradient(circle,#E6B84A,#D4A030);
+border-radius:50%;display:grid;place-items:center;
+font-size:80px;animation:cup 1.5s infinite alternate;
+}
+@keyframes cup{to{transform:scale(1.1)}}
+.win-text{
+font-size:36px;font-weight:bold;color:#E6B84A;margin-top:20px;
+text-shadow:0 0 20px #E6B84A;
+}
+
+/* 通用 */
 .page{display:none}
 .page.active{display:block}
-
-/* 推荐横幅 */
-.hero{
-background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
-padding:32px;border-radius:32px;margin-bottom:32px;
-box-shadow:0 12px 40px rgba(74,29,109,0.25);
-}
-.hero h1{font-size:36px;margin-bottom:8px}
-.hero p{color:rgba(255,255,255,0.8)}
-
-/* 卡片区域 */
-.section{margin-bottom:40px}
-.section-title{font-size:22px;margin-bottom:16px}
-.grid{
-display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-gap:18px;
-}
-.card{
-background:#1C1D2B;border-radius:20px;padding:18px;
-transition:all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
-cursor:pointer;position:relative;overflow:hidden;
-}
-.card:hover{
-transform:translateY(-6px);
-box-shadow:0 12px 30px rgba(74,29,109,0.2);
-}
-.cover{
-width:100%;aspect-ratio:1;background:#292A3A;
-border-radius:16px;margin-bottom:14px;
-}
-.card h3{font-size:15px;margin-bottom:6px}
-.card p{font-size:13px;color:rgba(255,255,255,0.6)}
-.like{
-background:none;border:none;color:#00D26A;
-font-size:14px;cursor:pointer;margin-top:6px;
-}
-
-/* 排行榜 */
-.rank-item{
-display:flex;align-items:center;gap:16px;padding:14px 18px;
-background:#1C1D2B;border-radius:14px;margin-bottom:10px;
-}
-.rank-num{
-font-weight:bold;background:linear-gradient(90deg,#E83E8C,#FF7B2C);
--webkit-background-clip:text;background-clip:text;color:transparent;
-}
-
-/* 歌词 */
-.lyric-box{
-text-align:center;height:70px;overflow:hidden;margin:20px 0;
-}
-.lyric{
-font-size:15px;line-height:22px;margin:4px 0;
-color:rgba(255,255,255,0.5);
-transition:all 0.25s;
-}
-.lyric.active{
-color:#fff;font-weight:600;
-background:linear-gradient(90deg,#E83E8C,#FF7B2C);
--webkit-background-clip:text;background-clip:text;color:transparent;
-transform:scale(1.05);
-}
-
-/* 播放器（毛玻璃流光质感核心） */
-.player{
-position:fixed;left:240px;right:0;bottom:20px;
-height:100px;
-background:rgba(28,29,43,0.7);backdrop-filter:blur(20px);
-border-radius:32px;
-border:1px solid rgba(255,255,255,0.08);
-box-shadow:0 20px 60px rgba(74,29,109,0.25);
-display:flex;align-items:center;gap:24px;padding:0 32px;
-z-index:9;
-}
-.track{display:flex;align-items:center;gap:18px;flex:1}
-.album{
-width:64px;height:64px;background:#292A3A;
-border-radius:24px;animation:rotate 20s linear infinite paused;
-}
-.album.play{animation-play-state:running}
-@keyframes rotate{to{transform:rotate(360deg)}}
-
-.info h4{font-size:15px;margin-bottom:4px}
-.info p{font-size:13px;color:rgba(255,255,255,0.6)}
-
-.controls{display:flex;align-items:center;gap:16px}
-.btn{
-width:40px;height:40px;display:grid;place-items:center;
-background:rgba(255,255,255,0.08);border:none;
-border-radius:50%;color:#fff;font-size:18px;cursor:pointer;
-transition:0.25s;
-}
-.btn:hover{background:rgba(255,255,255,0.15);transform:scale(1.05)}
-.play{
-width:56px;height:56px;
-background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
-box-shadow:0 8px 20px rgba(232,62,140,0.3);
-}
-
-/* 进度条 */
-.progress{
-flex:2;height:4px;background:rgba(255,255,255,0.12);
-border-radius:99px;overflow:hidden;position:relative;
-}
-.bar{
-height:100%;width:30%;
-background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
-border-radius:99px;
-}
-
-/* 音量 */
-.volume{
-display:flex;align-items:center;gap:10px;width:130px;
-}
-.vol-bar{
-flex:1;height:4px;background:rgba(255,255,255,0.12);
-border-radius:99px;overflow:hidden;
-}
-.vol-level{
-height:100%;width:70%;
-background:linear-gradient(90deg,#4A1D6D,#E83E8C);
-}
-
-/* 适配手机 */
-@media(max-width:900px){
-.sidebar{display:none}
-.main{margin-left:0}
-.player{left:0;border-radius:0;height:110px}
-}
-
-.audio{display:none}
+h2{margin-bottom:16px}
 </style>
 </head>
-
 <body>
 
-<div class="sidebar">
-<div class="logo">🎵 流光溢彩</div>
-<div class="nav-item active" data-page="home">首页</div>
-<div class="nav-item" data-page="discover">发现</div>
-<div class="nav-item" data-page="rank">排行榜</div>
-<div class="nav-item" data-page="playlist">歌单</div>
-<div class="nav-item" data-page="like">我的收藏</div>
+<!-- 语音 -->
+<audio id="voiceFirstBlood" src="https://assets.mixkit.co/sfx/preview/mixkit_video_game_first_blood_alert_923.mp3"></audio>
+<audio id="voiceVictory" src="https://assets.mixkit.co/sfx/preview/mixkit_celebration_win_fanfare_217.mp3"></audio>
+<audio id="voiceChampion" src="https://assets.mixkit.co/sfx/preview/mixkit_triumphant_fanfare_218.mp3"></audio>
+
+<!-- 夺冠 -->
+<div class="champion" id="champion">
+<div>
+<div class="cup">🏆</div>
+<div class="win-text">恭喜夺得总冠军！</div>
+<button class="btn-primary" onclick="closeChamp()" style="margin-top:30px">返回游戏</button>
+</div>
 </div>
 
+<!-- 顶部 -->
+<div class="header">
+<div class="logo">🏆 荣耀经理人 · 封神完整版</div>
+<div class="top-info">
+<div>资金：<span class="gold" id="gold">3680000</span></div>
+<div>周支出：<span class="salary" id="salary">1480000</span></div>
+<div>赛季：2026 春季赛</div>
+</div>
+</div>
+
+<div class="container">
+<!-- 导航 -->
+<div class="nav">
+<div class="nav-item active" data-page="home">🏠 总部</div>
+<div class="nav-item" data-page="team">👥 阵容</div>
+<div class="nav-item" data-page="contract">📝 合同管理</div>
+<div class="nav-item" data-page="skill">⚡ 选手技能</div>
+<div class="nav-item" data-page="equip">🎒 选手装备</div>
+<div class="nav-item" data-page="version">🔄 版本更新</div>
+<div class="nav-item" data-page="bp">🎯 BP 禁选</div>
+<div class="nav-item" data-page="match">🏆 比赛</div>
+</div>
+
+<!-- 主内容 -->
 <div class="main">
-<!-- 首页 -->
+<!-- 总部 -->
 <div class="page active" id="home">
-<div class="hero">
-<h1>为你推荐</h1>
-<p>沉浸式音乐体验 · 流光溢彩</p>
-</div>
-
-<div class="section">
-<h2 class="section-title">热门歌单</h2>
-<div class="grid">
-<div class="card" data-id="0">
-<div class="cover"></div>
-<h3>流行热歌</h3>
-<p>最新热门单曲</p>
-<button class="like">❤️ 收藏</button>
-</div>
-<div class="card" data-id="1">
-<div class="cover"></div>
-<h3>华语精选</h3>
-<p>百听不厌经典</p>
-<button class="like">❤️ 收藏</button>
-</div>
-<div class="card" data-id="2">
-<div class="cover"></div>
-<h3>治愈轻音乐</h3>
-<p>放松专注</p>
-<button class="like">❤️ 收藏</button>
-</div>
-<div class="card" data-id="3">
-<div class="cover"></div>
-<h3>电音狂欢</h3>
-<p>高燃节奏</p>
-<button class="like">❤️ 收藏</button>
-</div>
+<h2>俱乐部总部</h2>
+<div class="card">
+<div class="card-title">财务提醒</div>
+<div>• 每周自动扣除选手薪资：148万</div>
+<div>• 合同到期选手：1 名</div>
+<button class="btn-primary" onclick="paySalary()">发放周薪资</button>
 </div>
 </div>
 
-<div class="lyric-box" id="lyricBox"></div>
+<!-- 选手 -->
+<div class="page" id="team">
+<h2>选手阵容</h2>
+<div class="players">
+<div class="player-card">
+<div class="player-pos">对抗路</div>
+<div class="player-name">清清</div>
+<div class="player-stat">综合：89 | 年龄：22</div>
 </div>
-
-<!-- 发现 -->
-<div class="page" id="discover">
-<div class="hero"><h1>发现音乐</h1><p>探索全球好歌</p></div>
-<div class="grid">
-<div class="card" data-id="0"><div class="cover"></div><h3>欧美新歌</h3><p>最新海外热门</p></div>
-<div class="card" data-id="1"><div class="cover"></div><h3>粤语金曲</h3><p>经典港乐</p></div>
+<div class="player-card">
+<div class="player-pos" style="background:#E34D4D">打野</div>
+<div class="player-name">暖阳</div>
+<div class="player-stat">综合：93 | 年龄：21</div>
 </div>
+<div class="player-card">
+<div class="player-pos" style="background:#3A7BD5">中路</div>
+<div class="player-name">久诚</div>
+<div class="player-stat">综合：91 | 年龄：24</div>
 </div>
-
-<!-- 排行榜 -->
-<div class="page" id="rank">
-<h2 class="section-title">音乐排行榜</h2>
-<div class="rank-item"><div class="rank-num">01</div><div class="rank-title">热门榜</div></div>
-<div class="rank-item"><div class="rank-num">02</div><div class="rank-title">新歌榜</div></div>
-<div class="rank-item"><div class="rank-num">03</div><div class="rank-title">飙升榜</div></div>
+<div class="player-card">
+<div class="player-pos" style="background:#3AA857">发育路</div>
+<div class="player-name">一诺</div>
+<div class="player-stat">综合：94 | 年龄：22</div>
 </div>
-
-<!-- 歌单 -->
-<div class="page" id="playlist">
-<h2 class="section-title">全部歌单</h2>
-<div class="grid">
-<div class="card" data-id="2"><div class="cover"></div><h3>学习专注</h3><p>高效背景音乐</p></div>
-<div class="card" data-id="3"><div class="cover"></div><h3>开车必听</h3><p>一路好心情</p></div>
+<div class="player-card">
+<div class="player-pos" style="background:#A0A4B8">游走</div>
+<div class="player-name">阿豆</div>
+<div class="player-stat">综合：87 | 年龄：25</div>
 </div>
-</div>
-
-<!-- 我的收藏 -->
-<div class="page" id="like">
-<h2 class="section-title">我的收藏</h2>
-<div id="likeList" style="padding:24px;background:#1C1D2B;border-radius:16px">暂无收藏</div>
 </div>
 </div>
 
-<!-- 播放器（核心UI） -->
-<div class="player">
-<div class="track">
-<div class="album" id="cover"></div>
-<div class="info">
-<h4 id="songName">正在播放</h4>
-<p id="singerName">歌手 - 歌曲</p>
+<!-- 合同系统 → 全新页面 -->
+<div class="page" id="contract">
+<h2>选手合同 & 薪资管理</h2>
+
+<div class="contract">
+<div><b>清清 | 对抗路</b></div>
+<div>薪资：26万/周 | 合同剩余：4周</div>
+<button class="btn-green btn-sm" onclick="renew(0)">续约</button>
+<button class="btn-red btn-sm" onclick="terminate(0)">解约</button>
+</div>
+
+<div class="contract">
+<div><b>暖阳 | 打野</b></div>
+<div>薪资：32万/周 | 合同剩余：6周</div>
+<button class="btn-green btn-sm" onclick="renew(1)">续约</button>
+<button class="btn-red btn-sm" onclick="terminate(1)">解约</button>
+</div>
+
+<div class="contract">
+<div><b>久诚 | 中路</b></div>
+<div>薪资：28万/周 | 合同剩余：2周 <span style="color:red">即将到期</span></div>
+<button class="btn-green btn-sm" onclick="renew(2)">续约</button>
+<button class="btn-red btn-sm" onclick="terminate(2)">解约</button>
+</div>
+
+<div class="contract">
+<div><b>一诺 | 发育路</b></div>
+<div>薪资：35万/周 | 合同剩余：5周</div>
+<button class="btn-green btn-sm" onclick="renew(3)">续约</button>
+<button class="btn-red btn-sm" onclick="terminate(3)">解约</button>
+</div>
+
+<div class="contract contract-red">
+<div><b>阿豆 | 游走</b></div>
+<div>薪资：27万/周 | 年龄：25岁 <span style="color:red">即将退役</span></div>
+<button class="btn-green btn-sm" onclick="retire()">退役仪式</button>
+</div>
+
+<button class="btn-primary" style="margin-top:20px" onclick="nextWeek()">进入下一周</button>
+</div>
+
+<!-- 技能 -->
+<div class="page" id="skill">
+<h2>选手专属技能</h2>
+<div class="skill">
+<div class="skill-name">暖阳 · 无限收割</div>
+<div>斩杀后伤害+20%</div>
+</div>
+<div class="skill">
+<div class="skill-name">久诚 · 炮台爆发</div>
+<div>远程伤害+15%</div>
 </div>
 </div>
 
-<div class="controls">
-<button class="btn" id="prev">⏮</button>
-<button class="btn play" id="playBtn">▶</button>
-<button class="btn" id="next">⏭</button>
-</div>
-
-<div class="progress"><div class="bar" id="progress"></div></div>
-
-<div class="volume">
-<span>🔊</span>
-<div class="vol-bar"><div class="vol-level" id="vol"></div></div>
+<!-- 装备 -->
+<div class="page" id="equip">
+<h2>选手装备</h2>
+<div class="equip-grid">
+<div class="equip">打野刀<br>伤害+12%</div>
+<div class="equip">破军<br>输出+20%</div>
+<div class="equip">救赎<br>护盾+8%</div>
 </div>
 </div>
 
-<audio id="audio" class="audio">
+<!-- 版本 -->
+<div class="page" id="version">
+<h2>版本更新</h2>
+<div class="card">
+<div class="card-title">当前：射手荣耀 V2.6</div>
+<div>✅ 增强：公孙离、马可</div>
+<div>❌ 削弱：镜、澜</div>
+</div>
+</div>
+
+<!-- BP -->
+<div class="page" id="bp">
+<h2>全局 BP 禁选</h2>
+<div class="bp-box">
+<div class="bp-side">
+<div><b>我方 BAN/PICK</b></div>
+<div class="ban-pick">
+<div class="hero">镜</div><div class="hero">澜</div><div class="hero">大乔</div><div class="hero">张飞</div><div class="hero">弈星</div>
+</div>
+<div class="ban-pick">
+<div class="hero">公孙离</div><div class="hero">裴擒虎</div><div class="hero">沈梦溪</div><div class="hero">吕布</div><div class="hero">牛魔</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 比赛 -->
+<div class="page" id="match">
+<h2>比赛模拟</h2>
+<div class="card">
+<div class="battle-log" id="matchLog" style="background:#0F111A;padding:14px;border-radius:12px;height:240px;overflow-y:auto"></div>
+<button class="btn-primary" onclick="startMatch()">开始比赛</button>
+<button class="btn-primary btn-green" onclick="champion()" style="margin-left:10px">模拟夺冠</button>
+</div>
+</div>
+</div>
+
+<!-- 右侧面板 -->
+<div class="panel">
+<div class="card">
+<div class="card-title">财务状态</div>
+<div>每周薪资支出：148万</div>
+<div>合同到期：久诚</div>
+<div>即将退役：阿豆</div>
+</div>
+</div>
+</div>
 
 <script>
+// 语音
+function playVoice(id){
+const a=document.getElementById(id);if(a){a.currentTime=0;a.play().catch(e=>{})}
+}
+
 // 页面切换
-const nav = document.querySelectorAll('.nav-item')
-const pages = document.querySelectorAll('.page')
-nav.forEach(i=>{
+document.querySelectorAll('.nav-item').forEach(i=>{
 i.addEventListener('click',()=>{
-const id = i.dataset.page
-nav.forEach(n=>n.classList.remove('active'))
-pages.forEach(p=>p.classList.remove('active'))
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(i.dataset.page).classList.add('active')
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'))
 i.classList.add('active')
-document.getElementById(id).classList.add('active')
 })
 })
 
-// 歌曲数据
-const musics = [
-{name:"流行热歌",singer:"热门歌手",url:"https://demo.w3h5.com/music1.mp3",
-lyric:"这是第一句歌词\n这是第二句歌词\n这是高潮部分\n这是结束句"},
-{name:"华语经典",singer:"群星",url:"https://demo.w3h5.com/music2.mp3",
-lyric:"回忆里的画面\n在脑海中浮现\n我依然怀念\n从前的每一天"},
-{name:"治愈轻音乐",singer:"纯音乐",url:"https://demo.w3h5.com/music3.mp3",
-lyric:"安静的夜晚\n温柔的风\n思绪在飘动\n心渐渐放松"},
-{name:"电音狂欢",singer:"DJ组合",url:"https://demo.w3h5.com/music4.mp3",
-lyric:"跟着节奏摇摆\n所有烦恼抛开\n快乐无处不在"}
+// 发薪资
+function paySalary(){
+document.getElementById('gold').innerText=parseInt(document.getElementById('gold').innerText)-1480000
+alert('发放成功！扣除周薪资 148万')
+}
+
+// 续约
+function renew(idx){
+alert('续约成功！合同延长6周')
+}
+
+// 解约
+function terminate(idx){
+if(confirm('解约将支付违约金 500万！确定？')){
+document.getElementById('gold').innerText=parseInt(document.getElementById('gold').innerText)-500000
+alert('解约完成')
+}
+}
+
+// 退役
+function retire(){
+alert('阿豆正式退役！感谢贡献')
+}
+
+// 下一周
+function nextWeek(){
+paySalary()
+alert('进入新一周！薪资已发放，合同倒计时-1')
+}
+
+// 比赛
+function startMatch(){
+const log=document.getElementById('matchLog')
+log.innerHTML=''
+const arr=[
+'00:20 正常开局','03:10 【一血】暖阳拿下一血！','21:00 胜利！'
 ]
-
-const audio = document.getElementById('audio')
-const playBtn = document.getElementById('playBtn')
-const prev = document.getElementById('prev')
-const next = document.getElementById('next')
-const songName = document.getElementById('songName')
-const singerName = document.getElementById('singerName')
-const progress = document.getElementById('progress')
-const vol = document.getElementById('vol')
-const cover = document.getElementById('cover')
-const lyricBox = document.getElementById('lyricBox')
-const likeList = document.getElementById('likeList')
-
-let current = 0
-let playing = false
-let likes = new Set(JSON.parse(localStorage.getItem('likes'))||[])
-
-// 加载歌曲
-function load(idx){
-const m = musics[idx]
-audio.src = m.url
-songName.innerText = m.name
-singerName.innerText = m.singer
-showLyric(m.lyric)
-audio.volume = 0.7
-vol.style.width = '70%'
+let i=0;const t=setInterval(()=>{
+if(i>=arr.length){clearInterval(t);playVoice('voiceVictory');return}
+let s=arr[i++]
+if(s.includes('一血'))playVoice('voiceFirstBlood')
+log.innerHTML+=s+'<br>'
+log.scrollTop=log.scrollHeight
+},700)
 }
 
-// 歌词
-function showLyric(text){
-lyricBox.innerHTML = ''
-text.split('\n').forEach(line=>{
-const d = document.createElement('div')
-d.className = 'lyric'
-d.innerText = line
-lyricBox.appendChild(d)
-})
+// 夺冠
+function champion(){
+document.getElementById('champion').style.display='grid'
+playVoice('voiceChampion')
 }
-
-function syncLyric(){
-const lines = document.querySelectorAll('.lyric')
-const t = audio.currentTime / audio.duration || 0
-const i = Math.floor(t * lines.length)
-lines.forEach((l,j)=>l.classList.toggle('active',j===i))
+function closeChamp(){
+document.getElementById('champion').style.display='none'
 }
-
-// 播放
-playBtn.addEventListener('click',()=>{
-if(!audio.src) load(0)
-if(playing){
-audio.pause()
-playBtn.innerText = '▶'
-cover.classList.remove('play')
-}else{
-audio.play()
-playBtn.innerText = '⏸'
-cover.classList.add('play')
-}
-playing = !playing
-})
-
-prev.addEventListener('click',()=>{
-current = (current-1+musics.length)%musics.length
-load(current)
-audio.play()
-playing=1
-playBtn.innerText='⏸'
-cover.classList.add('play')
-})
-
-next.addEventListener('click',()=>{
-current = (current+1)%musics.length
-load(current)
-audio.play()
-playing=1
-playBtn.innerText='⏸'
-cover.classList.add('play')
-})
-
-// 进度
-audio.addEventListener('timeupdate',()=>{
-progress.style.width = (audio.currentTime/audio.duration)*100+'%'
-syncLyric()
-})
-
-// 音量
-vol.parentElement.addEventListener('click',e=>{
-const r = vol.parentElement.getBoundingClientRect()
-const p = (e.clientX-r.left)/r.width
-audio.volume = p
-vol.style.width = p*100+'%'
-})
-
-// 收藏
-document.querySelectorAll('.like').forEach((btn,i)=>{
-btn.addEventListener('click',e=>{
-e.stopPropagation()
-likes.has(i)?likes.delete(i):likes.add(i)
-localStorage.setItem('likes',JSON.stringify([...likes]))
-btn.innerText = likes.has(i)?'❤️ 已收藏':'❤️ 收藏'
-updateLikes()
-})
-})
-
-function updateLikes(){
-const arr = [...likes]
-if(!arr.length) likeList.innerHTML='暂无收藏'
-else likeList.innerHTML = arr.map(i=>`<div style='margin:8px 0'>• ${musics[i].name} - ${musics[i].singer}</div>`).join('')
-}
-
-// 点击播放
-document.querySelectorAll('.card').forEach(c=>{
-c.addEventListener('click',()=>{
-current = +c.dataset.id
-load(current)
-audio.play()
-playing=1
-playBtn.innerText='⏸'
-cover.classList.add('play')
-})
-})
-
-updateLikes()
 </script>
 </body>
 </html>
