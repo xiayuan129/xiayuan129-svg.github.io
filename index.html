@@ -1,155 +1,447 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Music | 发现好音乐</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-html,body{height:100%}
-body{background:#0a0a0c;color:#e8e8e8;display:flex;flex-direction:column}
-
-/* 顶部导航 */
-header{position:sticky;top:0;z-index:99;padding:16px 24px;background:rgba(10,10,12,0.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05)}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:700;color:#fff;letter-spacing:0.5px}
-nav{display:flex;gap:28px}
-nav a{color:#aaa;text-decoration:none;font-size:14px;transition:color 0.2s}
-nav a:hover{color:#fff}
-
-/* 主体容器 */
-.container{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:24px}
-
-/* 英雄区 */
-.hero{margin-bottom:40px;padding:32px;border-radius:18px;background:linear-gradient(135deg,#165DFF,#6366F1);color:white}
-.hero h1{font-size:32px;margin-bottom:8px}
-.hero p{font-size:15px;opacity:0.9}
-
-/* 标题样式 */
-.section-title{font-size:18px;font-weight:600;margin-bottom:16px;padding-left:10px;border-left:3px solid #165DFF}
-
-/* 歌单网格 */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:40px}
-.card{background:#121216;border-radius:14px;padding:14px;transition:all 0.25s ease;border:1px solid rgba(255,255,255,0.05)}
-.card:hover{transform:translateY(-4px);background:#1a1a22}
-.card-cover{width:100%;aspect-ratio:1;background:#1e1e28;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:12px}
-.card-title{font-size:14px;font-weight:500;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-desc{font-size:12px;color:#888}
-
-/* 底部播放器 */
-.player{position:fixed;left:0;right:0;bottom:0;background:rgba(10,10,12,0.9);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.06);padding:14px 24px}
-.player-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:20px}
-.track{display:flex;align-items:center;gap:12px;flex:1}
-.cover{width:48px;height:48px;background:#1e1e28;border-radius:8px}
-.info{line-height:1.3}
-.info h4{font-size:14px;font-weight:500}
-.info p{font-size:12px;color:#888;margin-top:2px}
-.controls{display:flex;align-items:center;gap:16px}
-.btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:none;border:none;color:#fff;font-size:16px;cursor:pointer}
-.play{width:36px;height:36px;background:#fff;color:#000;border-radius:50%}
-.progress{flex:2;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
-.bar{width:35%;height:100%;background:#165DFF;border-radius:2px}
-
-@media(max-width:768px){
-.hero h1{font-size:24px}
-.grid{grid-template-columns:repeat(2,1fr)}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合成大西瓜</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        .game-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            margin: 50px auto;
+            background: #f8f9fa;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .game-board {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .fruit {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+        .fruit:hover {
+            transform: scale(1.05);
+        }
+        .score-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 100;
+        }
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 200;
+            display: none;
+        }
+        .game-over h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+        .game-over button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .game-over button:hover {
+            background: #45a049;
+        }
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 300;
+        }
+        .start-screen h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .start-screen p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .start-screen button {
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .start-screen button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .next-fruit {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 100;
+        }
+        .next-fruit-title {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="game-container">
+        <!-- 开始屏幕 -->
+        <div class="start-screen" id="startScreen">
+            <h1>合成大西瓜</h1>
+            <p>点击屏幕左右移动水果，相同水果碰撞后会合成更大的水果，最终目标是合成大西瓜！</p>
+            <button onclick="startGame()">开始游戏</button>
+        </div>
+        
+        <!-- 游戏区域 -->
+        <div class="game-board" id="gameBoard">
+            <!-- 分数板 -->
+            <div class="score-board">
+                分数: <span id="score">0</span>
+            </div>
+            
+            <!-- 下一个水果 -->
+            <div class="next-fruit">
+                <div class="next-fruit-title">下一个</div>
+                <div id="nextFruit" class="fruit" style="width: 40px; height: 40px; background: #FF6B6B;">
+                    🍎
+                </div>
+            </div>
+        </div>
+        
+        <!-- 游戏结束屏幕 -->
+        <div class="game-over" id="gameOver">
+            <h2>游戏结束</h2>
+            <p>你的分数: <span id="finalScore">0</span></p>
+            <button onclick="restartGame()">重新开始</button>
+        </div>
+    </div>
 
-<header>
-<div class="nav-inner">
-<div class="logo">🎵 Music</div>
-<nav>
-<a href="#">首页</a>
-<a href="#">发现</a>
-<a href="#">歌单</a>
-<a href="#">我的</a>
-</nav>
-</div>
-</header>
+    <script>
+        // 游戏配置
+        const config = {
+            width: 400,
+            height: 600,
+            fruitSize: 60,
+            fruitTypes: [
+                { image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portrait%20photo%20of%20a%20young%20woman%20with%20long%20hair%20sitting%20on%20a%20chair%20in%20a%20cafe&image_size=square', size: 30 },
+                { image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portrait%20photo%20of%20a%20young%20woman%20with%20long%20hair%20sitting%20on%20a%20chair%20in%20a%20waiting%20area&image_size=square', size: 35 },
+                { image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=close%20up%20portrait%20photo%20of%20a%20young%20woman%20with%20long%20hair%20resting%20her%20chin%20on%20her%20hand&image_size=square', size: 40 },
+                { image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portrait%20photo%20of%20a%20young%20woman%20with%20long%20hair%20sitting%20in%20front%20of%20a%20bookshelf&image_size=square', size: 45 },
+                { image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portrait%20photo%20of%20a%20young%20woman%20with%20long%20hair%20holding%20a%20coffee%20drink&image_size=square', size: 50 }
+            ],
+            speed: 3,
+            acceleration: 0.05
+        };
 
-<div class="container">
-<section class="hero">
-<div>
-<h1>发现好音乐</h1>
-<p>为你精选每日推荐，随时随地享受高品质声音</p>
-</div>
-</section>
+        // 游戏状态
+        let gameState = {
+            fruits: [],
+            score: 0,
+            gameOver: false,
+            currentFruit: null,
+            nextFruit: null,
+            animationId: null,
+            speed: config.speed
+        };
 
-<h2 class="section-title">推荐歌单</h2>
-<div class="grid">
-<div class="card">
-<div class="card-cover">🎶</div>
-<div class="card-title">流行热歌榜</div>
-<div class="card-desc">2025最新热门单曲</div>
-</div>
-<div class="card">
-<div class="card-cover">🎸</div>
-<div class="card-title">经典摇滚</div>
-<div class="card-desc">永不褪色的摇滚金曲</div>
-</div>
-<div class="card">
-<div class="card-cover">🎹</div>
-<div class="card-title">轻音乐合集</div>
-<div class="card-desc">专注、放松、治愈</div>
-</div>
-<div class="card">
-<div class="card-cover">🎤</div>
-<div class="card-title">华语精选</div>
-<div class="card-desc">百听不厌的经典</div>
-</div>
-</div>
+        // 初始化游戏
+        function initGame() {
+            gameState = {
+                fruits: [],
+                score: 0,
+                gameOver: false,
+                currentFruit: null,
+                nextFruit: null,
+                animationId: null,
+                speed: config.speed
+            };
+            document.getElementById('score').textContent = '0';
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('gameBoard').innerHTML = `
+                <div class="score-board">
+                    分数: <span id="score">0</span>
+                </div>
+                <div class="next-fruit">
+                    <div class="next-fruit-title">下一个</div>
+                    <div id="nextFruit" class="fruit" style="width: 40px; height: 40px;"></div>
+                </div>
+            `;
+            spawnFruit();
+        }
 
-<h2 class="section-title">最新上架</h2>
-<div class="grid">
-<div class="card">
-<div class="card-cover">✨</div>
-<div class="card-title">新歌首发</div>
-<div class="card-desc">每周持续更新</div>
-</div>
-<div class="card">
-<div class="card-cover">🎧</div>
-<div class="card-title">Hi-Res音质</div>
-<div class="card-desc">高解析无损音乐</div>
-</div>
-</div>
-</div>
+        // 开始游戏
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            initGame();
+            gameLoop();
+        }
 
-<div class="player">
-<div class="player-inner">
-<div class="track">
-<div class="cover"></div>
-<div class="info">
-<h4>正在播放</h4>
-<p>歌手 - 歌曲名称</p>
-</div>
-</div>
-<div class="controls">
-<button class="btn">⏮</button>
-<button class="btn play">▶</button>
-<button class="btn">⏭</button>
-</div>
-<div class="progress"><div class="bar"></div></div>
-</div>
-</div>
+        // 重新开始游戏
+        function restartGame() {
+            initGame();
+            gameLoop();
+        }
 
-<script>
-const play = document.querySelector('.play')
-let playing = false
-play.addEventListener('click', () => {
-playing = !playing
-play.textContent = playing ? '⏸' : '▶'
-})
+        // 生成新水果
+        function spawnFruit() {
+            const randomType = Math.floor(Math.random() * config.fruitTypes.length);
+            const fruitType = config.fruitTypes[randomType];
+            
+            if (!gameState.currentFruit) {
+                gameState.currentFruit = createFruit(fruitType);
+                // 生成下一个水果
+                const nextRandomType = Math.floor(Math.random() * config.fruitTypes.length);
+                const nextFruitType = config.fruitTypes[nextRandomType];
+                gameState.nextFruit = nextFruitType;
+                updateNextFruitDisplay();
+            } else {
+                gameState.currentFruit = createFruit(gameState.nextFruit);
+                // 生成新的下一个水果
+                const nextRandomType = Math.floor(Math.random() * config.fruitTypes.length);
+                const nextFruitType = config.fruitTypes[nextRandomType];
+                gameState.nextFruit = nextFruitType;
+                updateNextFruitDisplay();
+            }
+        }
 
-document.querySelectorAll('.card').forEach(card => {
-card.addEventListener('click', () => {
-const t = card.querySelector('.card-title').textContent
-alert(`打开歌单：${t}`)
-})
-})
-</script>
+        // 创建水果元素
+        function createFruit(type) {
+            const fruit = document.createElement('div');
+            fruit.className = 'fruit';
+            fruit.style.width = `${type.size}px`;
+            fruit.style.height = `${type.size}px`;
+            fruit.style.left = `${(config.width - type.size) / 2}px`;
+            fruit.style.top = '0px';
+            fruit.style.backgroundImage = `url('${type.image}')`;
+            fruit.style.backgroundSize = 'cover';
+            fruit.style.backgroundPosition = 'center';
+            fruit.dataset.type = type.image;
+            fruit.dataset.size = type.size;
+            
+            document.getElementById('gameBoard').appendChild(fruit);
+            
+            return {
+                element: fruit,
+                x: (config.width - type.size) / 2,
+                y: 0,
+                size: type.size,
+                image: type.image,
+                speed: gameState.speed
+            };
+        }
+
+        // 更新下一个水果显示
+        function updateNextFruitDisplay() {
+            const nextFruitElement = document.getElementById('nextFruit');
+            nextFruitElement.textContent = '';
+            nextFruitElement.style.backgroundImage = `url('${gameState.nextFruit.image}')`;
+            nextFruitElement.style.backgroundSize = 'cover';
+            nextFruitElement.style.backgroundPosition = 'center';
+            nextFruitElement.style.width = `${gameState.nextFruit.size * 0.7}px`;
+            nextFruitElement.style.height = `${gameState.nextFruit.size * 0.7}px`;
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            if (gameState.gameOver) return;
+
+            // 更新当前水果位置
+            if (gameState.currentFruit) {
+                gameState.currentFruit.y += gameState.currentFruit.speed;
+                gameState.currentFruit.speed += config.acceleration;
+                gameState.currentFruit.element.style.top = `${gameState.currentFruit.y}px`;
+                gameState.currentFruit.element.style.left = `${gameState.currentFruit.x}px`;
+
+                // 检查碰撞
+                checkCollision();
+
+                // 检查是否触底
+                if (gameState.currentFruit.y + gameState.currentFruit.size > config.height) {
+                    // 检查是否游戏结束
+                    if (gameState.currentFruit.y < 50) {
+                        endGame();
+                        return;
+                    }
+                    // 将当前水果添加到水果列表
+                    gameState.fruits.push(gameState.currentFruit);
+                    // 生成新水果
+                    spawnFruit();
+                }
+            }
+
+            gameState.animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // 检查碰撞
+        function checkCollision() {
+            if (!gameState.currentFruit) return;
+
+            // 检查与其他水果的碰撞
+            for (let i = 0; i < gameState.fruits.length; i++) {
+                const fruit = gameState.fruits[i];
+                const distance = Math.sqrt(
+                    Math.pow(gameState.currentFruit.x + gameState.currentFruit.size/2 - (fruit.x + fruit.size/2), 2) +
+                    Math.pow(gameState.currentFruit.y + gameState.currentFruit.size/2 - (fruit.y + fruit.size/2), 2)
+                );
+
+                if (distance < (gameState.currentFruit.size + fruit.size) / 2) {
+                    // 检查是否是相同类型的水果
+                    if (gameState.currentFruit.image === fruit.image) {
+                        // 合成更大的水果
+                        combineFruits(gameState.currentFruit, fruit);
+                    } else {
+                        // 不同类型，停止当前水果
+                        gameState.fruits.push(gameState.currentFruit);
+                        spawnFruit();
+                    }
+                    break;
+                }
+            }
+
+            // 检查与墙壁的碰撞
+            if (gameState.currentFruit.x < 0) {
+                gameState.currentFruit.x = 0;
+            }
+            if (gameState.currentFruit.x + gameState.currentFruit.size > config.width) {
+                gameState.currentFruit.x = config.width - gameState.currentFruit.size;
+            }
+        }
+
+        // 合成水果
+        function combineFruits(fruit1, fruit2) {
+            // 移除两个水果
+            fruit1.element.remove();
+            fruit2.element.remove();
+            
+            // 从水果列表中移除被碰撞的水果
+            gameState.fruits = gameState.fruits.filter(f => f !== fruit2);
+            
+            // 找到当前水果在水果类型中的索引
+            const currentIndex = config.fruitTypes.findIndex(type => type.image === fruit1.image);
+            
+            // 如果不是最大的水果类型，合成更大的水果
+            if (currentIndex < config.fruitTypes.length - 1) {
+                const nextType = config.fruitTypes[currentIndex + 1];
+                const combinedFruit = createFruit(nextType);
+                combinedFruit.x = (fruit1.x + fruit2.x) / 2 - combinedFruit.size / 2;
+                combinedFruit.y = (fruit1.y + fruit2.y) / 2 - combinedFruit.size / 2;
+                combinedFruit.element.style.left = `${combinedFruit.x}px`;
+                combinedFruit.element.style.top = `${combinedFruit.y}px`;
+                
+                // 添加到水果列表
+                gameState.fruits.push(combinedFruit);
+                
+                // 增加分数
+                gameState.score += 10;
+                document.getElementById('score').textContent = gameState.score;
+                
+                // 生成新水果
+                spawnFruit();
+            } else {
+                // 已经是最大的水果类型
+                gameState.score += 50;
+                document.getElementById('score').textContent = gameState.score;
+                spawnFruit();
+            }
+        }
+
+        // 结束游戏
+        function endGame() {
+            gameState.gameOver = true;
+            cancelAnimationFrame(gameState.animationId);
+            document.getElementById('finalScore').textContent = gameState.score;
+            document.getElementById('gameOver').style.display = 'block';
+        }
+
+        // 鼠标移动控制
+        document.getElementById('gameBoard').addEventListener('mousemove', function(e) {
+            if (!gameState.currentFruit || gameState.gameOver) return;
+            
+            const rect = this.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            gameState.currentFruit.x = mouseX - gameState.currentFruit.size / 2;
+            
+            // 限制在游戏区域内
+            if (gameState.currentFruit.x < 0) {
+                gameState.currentFruit.x = 0;
+            }
+            if (gameState.currentFruit.x + gameState.currentFruit.size > config.width) {
+                gameState.currentFruit.x = config.width - gameState.currentFruit.size;
+            }
+        });
+
+        // 触摸控制
+        document.getElementById('gameBoard').addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (!gameState.currentFruit || gameState.gameOver) return;
+            
+            const rect = this.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            gameState.currentFruit.x = touchX - gameState.currentFruit.size / 2;
+            
+            // 限制在游戏区域内
+            if (gameState.currentFruit.x < 0) {
+                gameState.currentFruit.x = 0;
+            }
+            if (gameState.currentFruit.x + gameState.currentFruit.size > config.width) {
+                gameState.currentFruit.x = config.width - gameState.currentFruit.size;
+            }
+        }, { passive: false });
+    </script>
 </body>
 </html>
