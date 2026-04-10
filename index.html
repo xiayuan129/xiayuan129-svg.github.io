@@ -3,232 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>合成大西瓜</title>
+<title>流光溢彩 · 音乐平台</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"SF Pro Text","Inter",system-ui,sans-serif}
+html,body{height:100%}
 body{
-background:#f9f9f9;
-display:flex;align-items:center;justify-content:center;
-min-height:100vh;padding:10px;
+background:#0A0B10;color:rgba(255,255,255,0.92);
+overflow-x:hidden;padding-bottom:140px;
 }
-.game{
-position:relative;width:100%;max-width:380px;
-aspect-ratio:9/16;background:#fff;
-border-radius:22px;overflow:hidden;
-box-shadow:0 10px 40px rgba(0,0,0,0.15);
+
+/* 侧边栏 */
+.sidebar{
+position:fixed;top:0;left:0;width:240px;height:100vh;
+background:#12131C;backdrop-filter:blur(10px);
+padding:28px 20px;display:flex;flex-direction:column;gap:6px;
+z-index:10;
 }
-#c{width:100%;height:100%;display:block}
-.score{
-position:absolute;top:20px;left:20px;
-color:#fff;font-size:22px;font-weight:600;
-text-shadow:0 2px 4px rgba(0,0,0,0.2)
+.logo{
+font-size:24px;font-weight:700;
+background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+margin-bottom:24px;
 }
-.skins{
-position:absolute;top:20px;right:20px;
-display:flex;gap:8px
+.nav-item{
+display:flex;align-items:center;gap:12px;padding:14px 16px;
+border-radius:12px;font-size:15px;cursor:pointer;
+transition:all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
 }
-.skin{
-width:32px;height:32px;border-radius:50%;
-cursor:pointer;border:2px solid #fff
+.nav-item:hover{background:#1C1D2B}
+.nav-item.active{
+background:linear-gradient(90deg,#4A1D6D,#E83E8C);
+color:#fff;font-weight:600;
 }
-.skin1{background:linear-gradient(135deg,#667eea,#764ba2)}
-.skin2{background:linear-gradient(135deg,#22b6f0,#6dd5fa)}
-.skin3{background:linear-gradient(135deg,#44e088,#2ed573)}
-.over{
-position:absolute;inset:0;background:rgba(0,0,0,0.6);
-display:none;flex-direction:column;align-items:center;justify-content:center;
-color:#fff
+
+/* 主内容 */
+.main{margin-left:240px;padding:32px}
+.page{display:none}
+.page.active{display:block}
+
+/* 推荐横幅 */
+.hero{
+background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
+padding:32px;border-radius:32px;margin-bottom:32px;
+box-shadow:0 12px 40px rgba(74,29,109,0.25);
 }
-.over h2{font-size:42px;margin-bottom:10px}
-.over p{font-size:20px;margin-bottom:20px}
-.restart{
-padding:10px 24px;background:#fff;color:#000;
-border:none;border-radius:30px;font-weight:bold;
-cursor:pointer
+.hero h1{font-size:36px;margin-bottom:8px}
+.hero p{color:rgba(255,255,255,0.8)}
+
+/* 卡片区域 */
+.section{margin-bottom:40px}
+.section-title{font-size:22px;margin-bottom:16px}
+.grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:18px;
 }
+.card{
+background:#1C1D2B;border-radius:20px;padding:18px;
+transition:all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
+cursor:pointer;position:relative;overflow:hidden;
+}
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 12px 30px rgba(74,29,109,0.2);
+}
+.cover{
+width:100%;aspect-ratio:1;background:#292A3A;
+border-radius:16px;margin-bottom:14px;
+}
+.card h3{font-size:15px;margin-bottom:6px}
+.card p{font-size:13px;color:rgba(255,255,255,0.6)}
+.like{
+background:none;border:none;color:#00D26A;
+font-size:14px;cursor:pointer;margin-top:6px;
+}
+
+/* 排行榜 */
+.rank-item{
+display:flex;align-items:center;gap:16px;padding:14px 18px;
+background:#1C1D2B;border-radius:14px;margin-bottom:10px;
+}
+.rank-num{
+font-weight:bold;background:linear-gradient(90deg,#E83E8C,#FF7B2C);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* 歌词 */
+.lyric-box{
+text-align:center;height:70px;overflow:hidden;margin:20px 0;
+}
+.lyric{
+font-size:15px;line-height:22px;margin:4px 0;
+color:rgba(255,255,255,0.5);
+transition:all 0.25s;
+}
+.lyric.active{
+color:#fff;font-weight:600;
+background:linear-gradient(90deg,#E83E8C,#FF7B2C);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+transform:scale(1.05);
+}
+
+/* 播放器（毛玻璃流光质感核心） */
+.player{
+position:fixed;left:240px;right:0;bottom:20px;
+height:100px;
+background:rgba(28,29,43,0.7);backdrop-filter:blur(20px);
+border-radius:32px;
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:0 20px 60px rgba(74,29,109,0.25);
+display:flex;align-items:center;gap:24px;padding:0 32px;
+z-index:9;
+}
+.track{display:flex;align-items:center;gap:18px;flex:1}
+.album{
+width:64px;height:64px;background:#292A3A;
+border-radius:24px;animation:rotate 20s linear infinite paused;
+}
+.album.play{animation-play-state:running}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+.info h4{font-size:15px;margin-bottom:4px}
+.info p{font-size:13px;color:rgba(255,255,255,0.6)}
+
+.controls{display:flex;align-items:center;gap:16px}
+.btn{
+width:40px;height:40px;display:grid;place-items:center;
+background:rgba(255,255,255,0.08);border:none;
+border-radius:50%;color:#fff;font-size:18px;cursor:pointer;
+transition:0.25s;
+}
+.btn:hover{background:rgba(255,255,255,0.15);transform:scale(1.05)}
+.play{
+width:56px;height:56px;
+background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
+box-shadow:0 8px 20px rgba(232,62,140,0.3);
+}
+
+/* 进度条 */
+.progress{
+flex:2;height:4px;background:rgba(255,255,255,0.12);
+border-radius:99px;overflow:hidden;position:relative;
+}
+.bar{
+height:100%;width:30%;
+background:linear-gradient(90deg,#4A1D6D,#E83E8C,#FF7B2C);
+border-radius:99px;
+}
+
+/* 音量 */
+.volume{
+display:flex;align-items:center;gap:10px;width:130px;
+}
+.vol-bar{
+flex:1;height:4px;background:rgba(255,255,255,0.12);
+border-radius:99px;overflow:hidden;
+}
+.vol-level{
+height:100%;width:70%;
+background:linear-gradient(90deg,#4A1D6D,#E83E8C);
+}
+
+/* 适配手机 */
+@media(max-width:900px){
+.sidebar{display:none}
+.main{margin-left:0}
+.player{left:0;border-radius:0;height:110px}
+}
+
+.audio{display:none}
 </style>
 </head>
 
 <body>
-<div class="game">
-<div class="score">分数：0</div>
-<div class="skins">
-<div class="skin skin1" data-mode="1"></div>
-<div class="skin skin2" data-mode="2"></div>
-<div class="skin skin3" data-mode="3"></div>
+
+<div class="sidebar">
+<div class="logo">🎵 流光溢彩</div>
+<div class="nav-item active" data-page="home">首页</div>
+<div class="nav-item" data-page="discover">发现</div>
+<div class="nav-item" data-page="rank">排行榜</div>
+<div class="nav-item" data-page="playlist">歌单</div>
+<div class="nav-item" data-page="like">我的收藏</div>
 </div>
-<canvas id="c"></canvas>
-<div class="over">
-<h2>游戏结束</h2>
-<p>得分：<span id="final">0</span></p>
-<button class="restart">再来一局</button>
+
+<div class="main">
+<!-- 首页 -->
+<div class="page active" id="home">
+<div class="hero">
+<h1>为你推荐</h1>
+<p>沉浸式音乐体验 · 流光溢彩</p>
+</div>
+
+<div class="section">
+<h2 class="section-title">热门歌单</h2>
+<div class="grid">
+<div class="card" data-id="0">
+<div class="cover"></div>
+<h3>流行热歌</h3>
+<p>最新热门单曲</p>
+<button class="like">❤️ 收藏</button>
+</div>
+<div class="card" data-id="1">
+<div class="cover"></div>
+<h3>华语精选</h3>
+<p>百听不厌经典</p>
+<button class="like">❤️ 收藏</button>
+</div>
+<div class="card" data-id="2">
+<div class="cover"></div>
+<h3>治愈轻音乐</h3>
+<p>放松专注</p>
+<button class="like">❤️ 收藏</button>
+</div>
+<div class="card" data-id="3">
+<div class="cover"></div>
+<h3>电音狂欢</h3>
+<p>高燃节奏</p>
+<button class="like">❤️ 收藏</button>
 </div>
 </div>
+</div>
+
+<div class="lyric-box" id="lyricBox"></div>
+</div>
+
+<!-- 发现 -->
+<div class="page" id="discover">
+<div class="hero"><h1>发现音乐</h1><p>探索全球好歌</p></div>
+<div class="grid">
+<div class="card" data-id="0"><div class="cover"></div><h3>欧美新歌</h3><p>最新海外热门</p></div>
+<div class="card" data-id="1"><div class="cover"></div><h3>粤语金曲</h3><p>经典港乐</p></div>
+</div>
+</div>
+
+<!-- 排行榜 -->
+<div class="page" id="rank">
+<h2 class="section-title">音乐排行榜</h2>
+<div class="rank-item"><div class="rank-num">01</div><div class="rank-title">热门榜</div></div>
+<div class="rank-item"><div class="rank-num">02</div><div class="rank-title">新歌榜</div></div>
+<div class="rank-item"><div class="rank-num">03</div><div class="rank-title">飙升榜</div></div>
+</div>
+
+<!-- 歌单 -->
+<div class="page" id="playlist">
+<h2 class="section-title">全部歌单</h2>
+<div class="grid">
+<div class="card" data-id="2"><div class="cover"></div><h3>学习专注</h3><p>高效背景音乐</p></div>
+<div class="card" data-id="3"><div class="cover"></div><h3>开车必听</h3><p>一路好心情</p></div>
+</div>
+</div>
+
+<!-- 我的收藏 -->
+<div class="page" id="like">
+<h2 class="section-title">我的收藏</h2>
+<div id="likeList" style="padding:24px;background:#1C1D2B;border-radius:16px">暂无收藏</div>
+</div>
+</div>
+
+<!-- 播放器（核心UI） -->
+<div class="player">
+<div class="track">
+<div class="album" id="cover"></div>
+<div class="info">
+<h4 id="songName">正在播放</h4>
+<p id="singerName">歌手 - 歌曲</p>
+</div>
+</div>
+
+<div class="controls">
+<button class="btn" id="prev">⏮</button>
+<button class="btn play" id="playBtn">▶</button>
+<button class="btn" id="next">⏭</button>
+</div>
+
+<div class="progress"><div class="bar" id="progress"></div></div>
+
+<div class="volume">
+<span>🔊</span>
+<div class="vol-bar"><div class="vol-level" id="vol"></div></div>
+</div>
+</div>
+
+<audio id="audio" class="audio">
 
 <script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
-const scoreText = document.querySelector('.score');
-const finalScore = document.getElementById('final');
-const over = document.querySelector('.over');
-const restart = document.querySelector('.restart');
-const skins = document.querySelectorAll('.skin');
+// 页面切换
+const nav = document.querySelectorAll('.nav-item')
+const pages = document.querySelectorAll('.page')
+nav.forEach(i=>{
+i.addEventListener('click',()=>{
+const id = i.dataset.page
+nav.forEach(n=>n.classList.remove('active'))
+pages.forEach(p=>p.classList.remove('active'))
+i.classList.add('active')
+document.getElementById(id).classList.add('active')
+})
+})
 
-const W = 380, H = 650;
-c.width = W; c.height = H;
+// 歌曲数据
+const musics = [
+{name:"流行热歌",singer:"热门歌手",url:"https://demo.w3h5.com/music1.mp3",
+lyric:"这是第一句歌词\n这是第二句歌词\n这是高潮部分\n这是结束句"},
+{name:"华语经典",singer:"群星",url:"https://demo.w3h5.com/music2.mp3",
+lyric:"回忆里的画面\n在脑海中浮现\n我依然怀念\n从前的每一天"},
+{name:"治愈轻音乐",singer:"纯音乐",url:"https://demo.w3h5.com/music3.mp3",
+lyric:"安静的夜晚\n温柔的风\n思绪在飘动\n心渐渐放松"},
+{name:"电音狂欢",singer:"DJ组合",url:"https://demo.w3h5.com/music4.mp3",
+lyric:"跟着节奏摇摆\n所有烦恼抛开\n快乐无处不在"}
+]
 
-let theme = 1;
-const bgList = {
-1: 'linear-gradient(135deg,#667eea,#764ba2)',
-2: 'linear-gradient(135deg,#22b6f0,#6dd5fa)',
-3: 'linear-gradient(135deg,#44e088,#2ed573)'
-};
+const audio = document.getElementById('audio')
+const playBtn = document.getElementById('playBtn')
+const prev = document.getElementById('prev')
+const next = document.getElementById('next')
+const songName = document.getElementById('songName')
+const singerName = document.getElementById('singerName')
+const progress = document.getElementById('progress')
+const vol = document.getElementById('vol')
+const cover = document.getElementById('cover')
+const lyricBox = document.getElementById('lyricBox')
+const likeList = document.getElementById('likeList')
 
-// 你的6张图片作为水果
-const imgs = [];
-const urls = [
-"https://p3-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/2d982789b74247708d9612b294d31923.jpeg",
-"https://p9-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/8a7d0872474545459879867676767676.jpeg",
-"https://p3-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/1234567890abcdef1234567890abcdef.jpeg",
-"https://p3-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/9876543210fedcba9876543210fedcba.jpeg",
-"https://p3-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/11223344556677889900aabbccddeeff.jpeg",
-"https://p3-pc-sign.douyinpic.com/obj/tos-cn-i-a9a6449f/ffeeddccbbaa99887766554433221100.jpeg"
-];
+let current = 0
+let playing = false
+let likes = new Set(JSON.parse(localStorage.getItem('likes'))||[])
 
-urls.forEach(u => {
-  const i = new Image();
-  i.src = u;
-  imgs.push(i);
-});
-
-const fruits = [
-  { r:22, img:imgs[0] },
-  { r:28, img:imgs[1] },
-  { r:34, img:imgs[2] },
-  { r:40, img:imgs[3] },
-  { r:46, img:imgs[4] },
-  { r:52, img:imgs[5] }
-];
-
-let game = {
-  balls:[], score:0, over:false,
-  fall:null, next:0
-};
-
-function sound(type){
-  const a=new Audio();
-  if(type===0)a.src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3";
-  if(type===1)a.src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-mechanical-bling-210.mp3";
-  if(type===2)a.src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3";
-  a.volume=0.4; a.play().catch(()=>{});
+// 加载歌曲
+function load(idx){
+const m = musics[idx]
+audio.src = m.url
+songName.innerText = m.name
+singerName.innerText = m.singer
+showLyric(m.lyric)
+audio.volume = 0.7
+vol.style.width = '70%'
 }
 
-function setBg(){
-  document.querySelector('.game').style.background=bgList[theme];
+// 歌词
+function showLyric(text){
+lyricBox.innerHTML = ''
+text.split('\n').forEach(line=>{
+const d = document.createElement('div')
+d.className = 'lyric'
+d.innerText = line
+lyricBox.appendChild(d)
+})
 }
 
-function ball(x,t){
-  return {x,y:fruits[t].r, r:fruits[t].r, t, vx:0, vy:0.3};
+function syncLyric(){
+const lines = document.querySelectorAll('.lyric')
+const t = audio.currentTime / audio.duration || 0
+const i = Math.floor(t * lines.length)
+lines.forEach((l,j)=>l.classList.toggle('active',j===i))
 }
 
-function hit(a,b){
-  const dx=a.x-b.x, dy=a.y-b.y;
-  return Math.hypot(dx,dy) < a.r+b.r;
+// 播放
+playBtn.addEventListener('click',()=>{
+if(!audio.src) load(0)
+if(playing){
+audio.pause()
+playBtn.innerText = '▶'
+cover.classList.remove('play')
+}else{
+audio.play()
+playBtn.innerText = '⏸'
+cover.classList.add('play')
+}
+playing = !playing
+})
+
+prev.addEventListener('click',()=>{
+current = (current-1+musics.length)%musics.length
+load(current)
+audio.play()
+playing=1
+playBtn.innerText='⏸'
+cover.classList.add('play')
+})
+
+next.addEventListener('click',()=>{
+current = (current+1)%musics.length
+load(current)
+audio.play()
+playing=1
+playBtn.innerText='⏸'
+cover.classList.add('play')
+})
+
+// 进度
+audio.addEventListener('timeupdate',()=>{
+progress.style.width = (audio.currentTime/audio.duration)*100+'%'
+syncLyric()
+})
+
+// 音量
+vol.parentElement.addEventListener('click',e=>{
+const r = vol.parentElement.getBoundingClientRect()
+const p = (e.clientX-r.left)/r.width
+audio.volume = p
+vol.style.width = p*100+'%'
+})
+
+// 收藏
+document.querySelectorAll('.like').forEach((btn,i)=>{
+btn.addEventListener('click',e=>{
+e.stopPropagation()
+likes.has(i)?likes.delete(i):likes.add(i)
+localStorage.setItem('likes',JSON.stringify([...likes]))
+btn.innerText = likes.has(i)?'❤️ 已收藏':'❤️ 收藏'
+updateLikes()
+})
+})
+
+function updateLikes(){
+const arr = [...likes]
+if(!arr.length) likeList.innerHTML='暂无收藏'
+else likeList.innerHTML = arr.map(i=>`<div style='margin:8px 0'>• ${musics[i].name} - ${musics[i].singer}</div>`).join('')
 }
 
-function merge(a,b){
-  if(a.t!==b.t)return;
-  const nt=a.t+1;
-  if(nt>=fruits.length)return;
-  game.balls=game.balls.filter(o=>o!==a&&o!==b);
-  game.balls.push({
-    x:(a.x+b.x)/2, y:(a.y+b.y)/2,
-    r:fruits[nt].r, t:nt, vx:0, vy:0.2
-  });
-  game.score += (nt+1)*10;
-  sound(1);
-}
-
-function update(){
-  if(game.over)return;
-  game.balls.forEach(b=>{
-    b.vy+=0.12;
-    b.x+=b.vx; b.y+=b.vy; b.vx*=0.98;
-    if(b.x<b.r){b.x=b.r;b.vx*=-0.7;}
-    if(b.x>W-b.r){b.x=W-b.r;b.vx*=-0.7;}
-    if(b.y>H-b.r){b.y=H-b.r;b.vy=0;}
-  });
-
-  for(let i=0;i<game.balls.length;i++){
-    for(let j=i+1;j<game.balls.length;j++){
-      const a=game.balls[i],b=game.balls[j];
-      if(hit(a,b)){ merge(a,b); return; }
-    }
-  }
-
-  if(game.balls.some(b=>b.y<60)){
-    game.over=true;
-    over.style.display="flex";
-    finalScore.textContent=game.score;
-    sound(2);
-  }
-  scoreText.textContent="分数："+game.score;
-}
-
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  if(game.fall){
-    const b=game.fall;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-    ctx.clip();
-    ctx.drawImage(b.t<imgs.length?imgs[b.t]:imgs[0],b.x-b.r,b.y-b.r,b.r*2,b.r*2);
-    ctx.restore();
-  }
-  game.balls.forEach(b=>{
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-    ctx.clip();
-    ctx.drawImage(b.t<imgs.length?imgs[b.t]:imgs[0],b.x-b.r,b.y-b.r,b.r*2,b.r*2);
-    ctx.restore();
-  });
-  requestAnimationFrame(loop);
-}
-
-function loop(){ update(); draw(); }
-
-c.addEventListener('mousemove',e=>{
-  if(game.over||game.fall)return;
-  const r=c.getBoundingClientRect();
-  const x=e.clientX-r.left;
-  game.fall=ball(Math.max(fruits[game.next].r,Math.min(W-fruits[game.next].r,x)),game.next);
-});
-
+// 点击播放
+document.querySelectorAll('.card').forEach(c=>{
 c.addEventListener('click',()=>{
-  if(game.over||!game.fall)return;
-  game.balls.push(game.fall);
-  game.fall=null;
-  game.next=Math.floor(Math.random()*3);
-  sound(0);
-});
+current = +c.dataset.id
+load(current)
+audio.play()
+playing=1
+playBtn.innerText='⏸'
+cover.classList.add('play')
+})
+})
 
-restart.addEventListener('click',()=>{
-  game.balls=[]; game.score=0;
-  game.over=false; game.fall=null;
-  over.style.display="none";
-});
-
-skins.forEach(s=>{
-  s.addEventListener('click',()=>{
-    theme=Number(s.dataset.mode);
-    setBg();
-  });
-});
-
-setBg();
-loop();
+updateLikes()
 </script>
 </body>
 </html>
